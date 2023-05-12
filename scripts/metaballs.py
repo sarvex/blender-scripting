@@ -12,8 +12,8 @@ def createMetaball(origin=(0, 0, 0), n=30, r0=4, r1=2.5):
     metaball.resolution = 0.2
     metaball.render_resolution = 0.05
 
-    for i in range(n):
-        location = Vector(origin) + Vector(random.uniform(-r0, r0) for i in range(3))
+    for _ in range(n):
+        location = Vector(origin) + Vector(random.uniform(-r0, r0) for _ in range(3))
 
         element = metaball.elements.new()
         element.co = location

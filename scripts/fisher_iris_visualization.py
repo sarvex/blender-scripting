@@ -68,11 +68,7 @@ def create_scatter(X, y, size=0.25):
     colors = [(1, 0, 0, 1), (0, 1, 0, 1), (0, 0, 1, 1), \
               (1, 1, 0, 1), (1, 0, 1, 1), (0, 1, 1, 1)]
 
-    # Create a bmesh for each label
-    bmList = []
-    for labelIdx in labelIndices:
-        bmList.append(bmesh.new())
-
+    bmList = [bmesh.new() for _ in labelIndices]
     # Iterate through all the vectors and targets
     for x, labelIdx in zip(X, y):
         # Use the vector as translation for each point
@@ -93,16 +89,16 @@ def create_scatter(X, y, size=0.25):
     objects = []
     for labelIdx, color in zip(labelIndices, colors):
         # Create a mesh from the existing bmesh
-        mesh = bpy.data.meshes.new('ScatterMesh {}'.format(labelIdx))
+        mesh = bpy.data.meshes.new(f'ScatterMesh {labelIdx}')
         bmList[labelIdx].to_mesh(mesh)
         bmList[labelIdx].free()
 
         # Create a object with the mesh and link it to the scene
-        obj = bpy.data.objects.new('ScatterObject {}'.format(labelIdx), mesh)
+        obj = bpy.data.objects.new(f'ScatterObject {labelIdx}', mesh)
         bpy.context.collection.objects.link(obj)
 
         # Create materials for each bmesh
-        mat = bpy.data.materials.new('ScatterMaterial {}'.format(labelIdx))
+        mat = bpy.data.materials.new(f'ScatterMaterial {labelIdx}')
         mat.diffuse_color = color
         # mat.diffuse_intensity = 0.5
         mat.specular_intensity = 0.0
@@ -131,7 +127,7 @@ def create_labels(X, y, labels, camera=None):
         font_curve.align_y = 'BOTTOM'
         font_curve.size = 0.6
 
-        obj = bpy.data.objects.new("Label {}".format(label), font_curve)
+        obj = bpy.data.objects.new(f"Label {label}", font_curve)
         obj.location = center + Vector((0, 0, 0.8))
         obj.rotation_mode = 'AXIS_ANGLE'
         obj.rotation_axis_angle = (pi/2, 1, 0, 0)

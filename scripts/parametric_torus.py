@@ -16,8 +16,8 @@ def torus_surface(r0, r1):
 
 # Create an object from a surface parameterization
 def create_surface(surface, n=10, m=10, origin=(0,0,0), name='Surface'):
-    verts = list()
-    faces = list()
+    verts = []
+    faces = []
 
     # Create uniform n by m grid
     for col in range(m):
@@ -40,11 +40,11 @@ def create_surface(surface, n=10, m=10, origin=(0,0,0), name='Surface'):
                 (col*n) + row
             ))
 
-    print('verts : ' + str(len(verts)))
-    print('faces : ' + str(len(faces)))
+    print(f'verts : {len(verts)}')
+    print(f'faces : {len(faces)}')
 
     # Create mesh and object
-    mesh = bpy.data.meshes.new(name+'Mesh')
+    mesh = bpy.data.meshes.new(f'{name}Mesh')
     obj  = bpy.data.objects.new(name, mesh)
     obj.location = origin
     # Link object to scene

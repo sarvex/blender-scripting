@@ -7,14 +7,13 @@ import os
 
 
 def remove_object(obj):
-    if obj.type == 'MESH':
-        if obj.data.name in bpy.data.meshes:
-            bpy.data.meshes.remove(obj.data)
-        if obj.name in bpy.context.scene.objects:
-            bpy.context.scene.objects.unlink(obj)
-        bpy.data.objects.remove(obj)
-    else:
+    if obj.type != 'MESH':
         raise NotImplementedError('Other types not implemented yet besides \'MESH\'')
+    if obj.data.name in bpy.data.meshes:
+        bpy.data.meshes.remove(obj.data)
+    if obj.name in bpy.context.scene.objects:
+        bpy.context.scene.objects.unlink(obj)
+    bpy.data.objects.remove(obj)
 
 
 def track_to_constraint(obj, target):
@@ -176,14 +175,12 @@ def render(
             bpy.ops.render.render(animation=True)
         else:
             # Render still frame
-            scene.render.filepath = os.path.join(
-                render_folder,
-                render_name + '.png')
+            scene.render.filepath = os.path.join(render_folder, f'{render_name}.png')
             bpy.ops.render.render(write_still=True)
 
 
 def bmesh_to_object(bm, name='Object'):
-    mesh = bpy.data.meshes.new(name + 'Mesh')
+    mesh = bpy.data.meshes.new(f'{name}Mesh')
     bm.to_mesh(mesh)
     bm.free()
 

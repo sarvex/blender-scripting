@@ -28,7 +28,7 @@ def recursive_tetrahedron(bm, points, level=0):
         pK = points[:i] + points[i + 1:]
         sub_tetras.append([p0] + [(p0 + p)/2 for p in pK])
 
-    if 0 < level:
+    if level > 0:
         for subTetra in sub_tetras:
             recursive_tetrahedron(bm, subTetra, level-1)
     else:

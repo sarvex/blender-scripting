@@ -23,8 +23,9 @@ def voronoi_landscape(n=1000, w=10, h=5):
     verts, regions = vor.vertices, vor.regions
 
     # Filter unused voronoi regions
-    regions = [region for region in regions
-                if not -1 in region and len(region) > 0]
+    regions = [
+        region for region in regions if -1 not in region and len(region) > 0
+    ]
     regions = [region for region in regions
                 if np.all([np.linalg.norm(verts[i]) < 1.2 for i in region])]
 
@@ -33,7 +34,7 @@ def voronoi_landscape(n=1000, w=10, h=5):
     vDict, faces = {}, []
     for region in regions:
         for idx in region:
-            if not idx in vDict:
+            if idx not in vDict:
                 x, y, z = verts[idx, 0]*w, verts[idx, 1]*w, 0
                 vert = bm.verts.new((x, y, z))
                 vDict[idx] = vert

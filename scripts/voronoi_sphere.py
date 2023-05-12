@@ -21,8 +21,7 @@ def VoronoiSphere(bm, points, r=2, offset=0.02, num_materials=1):
         faces_dict[idx_p0].append(ridge_vertices)
         faces_dict[idx_p1].append(ridge_vertices)
 
-    for idx_point in faces_dict:
-        region = faces_dict[idx_point]
+    for idx_point, region in faces_dict.items():
         center = Vector(vor.points[idx_point])
         if len(region) <= 1: continue
 

@@ -56,7 +56,7 @@ class PhyllotaxisFlower():
     def __frame_change_handler(self, scene, value):
         frame = scene.frame_current
         # Constrain to frame range
-        if(frame < 1): frame = 1
+        frame = max(frame, 1)
         if(frame >= self.frames): frame = self.frames + 1
 
         mesh = self.obj.data
